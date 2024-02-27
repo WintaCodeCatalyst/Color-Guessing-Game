@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Color Guessing Game</title>
+    <style>
+      button {
+        border-radius: 200px;
+        width: 250px;
+        height: 50px;
+        font-size: 24px;
+        background-color: lavenderblush;
+        border: 3px solid rgb(243, 238, 240);
+        cursor: pointer;
+        box-shadow: 0 8px #e1e3e1;
+      }
+      button:hover {
+        background-color: rgb(219, 181, 196);
+      }
+      button:active {
+        transform: translateY(8px);
+        box-shadow: 0 10px floralwhite;
+      }
+    </style>
+  </head>
+
+  <body>
+    <img src="images/Color Guessing Game.png" width="400px" />
+    <h1
+      style="
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+          'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        color: rgb(75, 89, 90);
+      "
+    >
+      Color guessing game
+    </h1>
+    <button style="color: rgb(91, 13, 52); opacity: 0.8" onclick="runGame()">
+      <strong>Start Game</strong>
+    </button>
+    <script>
+      const COLORS_ARRAY = [
+        "blue",
+        "cyan",
+        "gold",
+        "gray",
+        "green",
+        "magenta",
+        "orange",
+        "red",
+        "white",
+        "yellow",
+      ];
+
+      let guessString = "";
+      let guessColor = 0;
+      let correct = false;
+      let numTries = 0;
+      let arrayLength = COLORS_ARRAY.length;
+
+      const randomNumber = Math.random() * arrayLength;
+      const targetIndex = Math.floor(randomNumber);
+      const target = COLORS_ARRAY[targetIndex];
+      const colors = COLORS_ARRAY.join(", ");
+
+
+      function runGame() {
+        do {
+          guessString = prompt(
+            "I am thinking of one of these colors:\n\n" +
+              colors +
+              "\n\nWhat color am I thinking of?\n"
+          );
+          numTries += 1;
+          correct = checkGuess(guessString, target);
+          if (guessString === null) {
+            alert("Thank you for playing CGG - you will now exit the game!");
+            return;
+          }
+        } while (!correct);
+        alert(
+          "Congratulations! \n\n You guessed the right color, " +
+            target +
+            ". \n\nIt took you " +
+            numTries +
+            " guesses to finish the game. Great job,  click OK to see this color in the background."
+        );
+        document.body.style.background = guessString;
+      }
+
+      function checkGuess(guessString, target) {
+        let correct = false;
+        if (!COLORS_ARRAY.includes(guessString)) {
+          alert(
+            "The color you guessed is not in the list.\n\n Please try again."
+          );
+        } else if (guessString > target) {
+          alert(
+            "Sorry, your guess is incorrect.\n\n Hint: You guessed a color found later in the alphabet than the mystery color.\n\n Please try again."
+          );
+        } else if (guessString < target) {
+          alert(
+            "Sorry, your guess is incorrect.\n\n Hint: You guessed a color found earlier in the alphabet than the mystery color.\n\n Please try again."
+          );
+        } else {
+          correct = true;
+        }
+        return correct;
+      }
+    </script>
+  </body>
+</html>
